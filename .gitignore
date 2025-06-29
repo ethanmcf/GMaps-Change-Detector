@@ -1,0 +1,7 @@
+src/gmaps-image-scraper.egg-info/
+gmapenv/
+.venv/
+.env
+google_cred_key.json
+gmaps_image_scraper.egg-info/
+__pycache__/
