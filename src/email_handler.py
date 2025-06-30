@@ -24,7 +24,7 @@ def send_email():
     https://www.google.com/maps/place/Majestic+Elegance+Costa+Mujeres/@21.2811059,-86.8200595,1083m/data=!3m2!1e3!4b1!4m9!3m8!1s0x8f4c318a57aa36e7:0xc3ed13366f9e5d55!5m2!4m1!1i2!8m2!3d21.2811059!4d-86.8200595!16s%2Fg%2F11h07gcl3z?entry=ttu&g_ep=EgoyMDI1MDYyMy4yIKXMDSoASAFQAw%3D%3D
     """
     msg.set_content(content)
-    with open('src/screenshots/recent.png', 'rb') as f:
+    with open('src/screenshots/new_gms_screenshot.png', 'rb') as f:
         file_data = f.read()
         file_name = f.name
 

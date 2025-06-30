@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gmaps-detector
+  namespace: gmaps-detector
+spec:
+  schedule: "*/2 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: gmaps-detector
+              image: gmaps-detector
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: gmaps-detector-secrets
+          restartPolicy: Never

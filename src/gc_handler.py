@@ -7,15 +7,15 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CRE
 BUCKET_NAME = "gmaps-change-detector"
 SAVED_GCP_SCREENSHOT_NAME = "saved_gcp_screenshot.jpeg"
 
-def upload_image_to_gcs(local_path):
+def upload_image_to_gcs(local_path, name=SAVED_GCP_SCREENSHOT_NAME):
     # Initialize client
     storage_client = storage.Client()
     bucket = storage_client.bucket(BUCKET_NAME)
-    blob = bucket.blob(SAVED_GCP_SCREENSHOT_NAME)
+    blob = bucket.blob(name)
 
     # Upload file
     blob.upload_from_filename(local_path)
-    print(f"Uploaded {local_path} to gs://{BUCKET_NAME}/{SAVED_GCP_SCREENSHOT_NAME}")
+    print(f"Uploaded {local_path} to gs://{BUCKET_NAME}/{name}")
 
 def download_image_from_gcs(local_path):
     # Initialize client

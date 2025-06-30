@@ -5,3 +5,5 @@ gmapenv/
 google_cred_key.json
 gmaps_image_scraper.egg-info/
 __pycache__/
+k8s/secrets.yaml
+src/screenshots/

@@ -1,4 +1,42 @@
+import random
+import time
+import gc_handler
 from playwright.sync_api import sync_playwright
+
+def wait_for_tiles_to_load(page, idle_time=1.0, timeout=10.0):
+    """
+    Waits until Google Maps tiles have finished loading, including detailed layers.
+    idle_time: how long network must be idle (in seconds)
+    timeout: max time to wait (in seconds)
+    """
+    start_time = time.time()
+    active_requests = set()
+
+    def handle_request(request):
+        if '/maps/vt' in request.url:
+            active_requests.add(request.url)
+
+    def handle_finished(request):
+        if request.url in active_requests:
+            active_requests.remove(request.url)
+
+    page.on('request', handle_request)
+    page.on('requestfinished', handle_finished)
+    page.on('requestfailed', handle_finished)
+
+    # Wait for a period of no new tile activity
+    last_active = time.time()
+    while True:
+        if not active_requests:
+            if time.time() - last_active >= idle_time:
+                break
+        else:
+            last_active = time.time()
+
+        if time.time() - start_time > timeout:
+            print("Warning: tile load wait timed out.")
+            break
+        time.sleep(0.1)
 
 def save_gmaps_image():
     print("Loading gmaps image...")
@@ -14,17 +52,22 @@ def save_gmaps_image():
         
         print("Moving and zooming...")
         # Move or zoom to force full tile load
-        page.keyboard.press("ArrowUp")     # Pan north
-        page.wait_for_timeout(500)
-        page.keyboard.press("ArrowDown")   # Pan back
-        page.wait_for_timeout(500)
+        numMoves = random.randint(1, 3)
+        for i in range(numMoves):
+            page.keyboard.press("ArrowUp")     # Pan north
+            page.wait_for_timeout(500)
+            page.keyboard.press("ArrowDown")   # Pan back
+            page.wait_for_timeout(500)
 
         # Or zoom in and out
-        page.keyboard.press("+")
-        page.wait_for_timeout(500)
-        page.keyboard.press("-")
+        for i in range(numMoves):
+            page.keyboard.press("+")
+            page.wait_for_timeout(500)
+            page.keyboard.press("-")
 
-        print("Waiting for 15 seconds...")
+
+        print("Waiting for tiles to load...")
+        wait_for_tiles_to_load(page)
         page.wait_for_timeout(15000)
         
         print("Saving gmaps image...")
@@ -34,6 +77,7 @@ def save_gmaps_image():
             type='jpeg',
             quality=100,
         )
+
         browser.close()
     print("Gmaps image saved")
 if __name__ == "__main__":

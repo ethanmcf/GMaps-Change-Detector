@@ -3,3 +3,4 @@ python-dotenv
 supabase
 pillow
 google-cloud-storage
+numpy

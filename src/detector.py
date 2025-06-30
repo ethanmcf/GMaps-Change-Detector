@@ -2,7 +2,7 @@ import email_handler
 import os
 import gc_handler
 import gmaps_handler
-from PIL import Image, ImageChops, ImageFilter
+from PIL import Image, ImageChops
 import numpy as np  
 
 def detect_change():
@@ -29,9 +29,8 @@ def detect_change():
     print(f"Verifying difference: {diff_ratio:.6f} ({diff_ratio * 100:.2f}%)")
 
     if diff_ratio > 0.1:
-        diff.save("src/screenshots/diff.png")
         print("Over 10 percent change detected ... sending email")
-        # email_handler.send_email()
+        email_handler.send_email()
     else:
         print("No change detected")
 
