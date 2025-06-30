@@ -4,7 +4,7 @@ metadata:
   name: gmaps-detector
   namespace: gmaps-detector
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "0 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:

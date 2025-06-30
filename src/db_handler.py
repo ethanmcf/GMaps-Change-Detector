@@ -19,8 +19,8 @@ def should_exit():
     DB_NAME = "run_history"
     RUN_ID = "run_id"
     result = conn.table(DB_NAME).select("last_run").eq("id", RUN_ID).execute()
-    two_days_ago = (datetime.now() - timedelta(days=5)).strftime("%Y-%m-%d")
-    if not result.data or result.data[0]["last_run"] < two_days_ago:
+    days_ago = (datetime.now() - timedelta(days=5)).strftime("%Y-%m-%d")
+    if not result.data or result.data[0]["last_run"] < days_ago:
         now = datetime.now().strftime("%Y-%m-%d")
         if not result.data:
             conn.table(DB_NAME).insert({"id": RUN_ID, "last_run": now}).execute()
