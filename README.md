@@ -35,4 +35,4 @@ kubectl get pods -n gmaps-detector
 kubectl logs POD_NAME -n gmaps-detector
 ```
 
-# Load secrets from .env
+Load secrets from .env
