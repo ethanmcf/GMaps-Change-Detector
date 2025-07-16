@@ -17,4 +17,4 @@ COPY google_cred_key.json .
 ENV PYTHONPATH=/app/src
 
 # Run the gmaps detector
-CMD ["bash", "src/run-if-not-recent.sh"]
+CMD ["bash", "src/run.sh", "loop"]
