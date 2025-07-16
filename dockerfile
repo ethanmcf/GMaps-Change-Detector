@@ -17,4 +17,5 @@ COPY google_cred_key.json .
 ENV PYTHONPATH=/app/src
 
 # Run the gmaps detector
-CMD ["bash", "src/run.sh", "loop"]
+CMD ["bash", "src/run.sh", "loop"] 
+# pass in 'loop' arg to run in infite loop
